@@ -5,49 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Jerry Kwophi Supernatural (+233247792110)"/>
     <meta name="description" content="ALX Project work"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
     <title>Weather App</title>
     <link rel="stylesheet" href="assets/css/styles.css">
      <link href="assets/css/all.css" rel="stylesheet">
      <script src="assets/js/all.js"></script>
 </head>
 <body>
-    <div class="weather-app" style="min-height: 100vh; border-radius: 1rem;">
-        <!-- <div class="current-weather" style="min-height: 65vh;" > -->
+    <div class="weather-app">
         <div class="current-weather">
-            <h2 id="city" style="padding-top:1.5rem">City</h2>
+            <h2 id="city">City</h2>
             <p id="date">Date</p>
             <div class="weather-icon">
-                <img id="current-icon" style="margin:1rem 0" src="assets/sunny.png" alt="Weather Icon">
+                <img id="current-icon" src="sunny.png" alt="Weather Icon">
             </div>
             <div class="temperature">
-                <span id="current-temp" style="font-size: 5rem;">0</span>°
+                <span id="current-temp">0</span>°
             </div>
             <p id="description">Description</p>
 
-            <div class="details" style="background-color: aquamarine; padding: 1rem; border-radius: 1rem; color:black; font-size: smaller; position: absolute; bottom:26%; left:41%; display: flex; gap:0.7rem; max-width: max-content;">
+            <div class="details">
                 <div class="detail" >
-                  <i class="fa fa-tint" style="font-size:1.5rem;color:#008cff; padding:0.2rem"></i>
+                  <i class="fa fa-tint"></i>
                   <div>Humidity</div>
                   <div id="humidity">0%</div>
                 </div>
                 <div class="detail">
-                  <i class="fa fa-umbrella" style="font-size:1.5rem;color:#f05dcb; padding:0.2rem"></i>
+                  <i class="fa fa-umbrella"></i>
                     <div>Precipitation</div>
                     <div id="precipitation">0%</div>
                 </div>
                 <div class="detail">
-                  <i class="fa fa-wind" style="font-size:1.5rem;color:#000000; padding:0.2rem"></i>
+                  <i class="fa fa-wind"></i>
                     <div>Windy</div>
                     <div id="wind">0 km/h</div>
                 </div>
             </div>
 
         </div>
-        <div class="weekly-forecast" style="background-color: rgb(255, 255, 255); min-height: 35vh;  color:black;">
-            <h5 style="padding-top: 4rem; padding-left: 2rem;">Next 2 Days</h5>
+        <div class="weekly-forecast" >
+            <h5>Next 2 Days</h5>
             <div class="forecast" id="forecast-container">
                 <!-- Forecast days will be dynamically added here -->
             </div>
+            <a href="./subscriptionScreen.html">
+                <button class="btn">Subscibe</button>
+            </a>
         </div>
     </div>
     <script src="assets/js/script.js"></script>

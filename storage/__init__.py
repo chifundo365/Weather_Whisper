@@ -3,4 +3,4 @@
 from .db_storage import DB_storage
 
 
-storage = DB_storage()
+db = DB_storage()

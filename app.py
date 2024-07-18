@@ -8,26 +8,6 @@ import storage
 app = Flask(__name__)
 
 
-def validate_user_input(fname, lname, code, phone, country, city, gender):
-    """ Validates user info input """
-    errors = {}
-    if len(fname) < 3 or not re.search("^[a-zA-Z]+$", fname):
-        errors["firstname"] = "Firstname has few chracters"
-    if len(lname) < 3 or not re.search("^[a-zA-Z]+$", lname):
-        errors["lastname"] =  "Lastname cant be empty or has less characters"
-    if len(code) < 1 or not re.search("^[0-9]+$", code):
-        errors["country_code"] = "invalid country code"
-    if len(phone) < 5 or not re.search("^[0-9]+$", phone):
-        errors["phone_number"] = "Invalid phone number"
-    if len(country) < 3 or not re.search("[a-zA-Z]+", country):
-        errors["country"] = "Country name is invalid"
-    if len(city) < 3:
-        errors["city"] = "city name is invalid"
-    if len(gender) < 3 or not re.search("[a-zA-Z]+", gender):
-        errors["gender"] = "the gender in invalid"
-    
-    return errors
-
 
 
 @app.route("/", strict_slashes=False, methods=["GET", "POST"])

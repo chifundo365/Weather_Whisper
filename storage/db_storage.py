@@ -23,32 +23,37 @@ class DB_storage():
                     )
             self.cursor = db.cursor()
         except Exception as e:
-            return e
+            return None
 
     def get_all_numbers(self):
         """ Gets all the phone numbers wih country code in the database """
         if self.cursor:
             query = "SELECT country_code, phone_number FROM users"
-            numbers_code = self.cursor.execute(query)
+            result = self.cursor.execute(query)
+            numbers_code = self.cursor.fetchall()
 
             return numbers_code
-        return []
+        return ()
 
     def create(self, fname, lname, c_code, phone, country, city, gender):
         """ Inserts into DB storage current users personal info """
-        query = "INSERT INTO users({}) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-        fields = "first_name, last_name, country_code, {}, {}, {}, {}"
-        fileds.format("phone_number", "country", "city", "gender")
-        query.format(fields)
-        result = self.cursor.execute(
-                query, (
-                    fname,
-                    lname,
-                    c_code,
-                    phone,
-                    country,
-                    city,
-                    gender
+        try:
+            query = "INSERT INTO users({}) VALUES(%s, %s, %s, %s, %s, %s, %s)"
+            fields = "first_name, last_name, country_code, {}, {}, {}, {}"
+            fields = fields.format("phone_number", "country", "city", "gender")
+            query = query.format(fields)
+            result = self.cursor.execute(
+                    query, (
+                        fname,
+                        lname,
+                        c_code,
+                        phone,
+                        country,
+                        city,
+                        gender
+                        )
                     )
-                )
-        return True if result else False
+            self.db.commit()
+        except Exception as e:
+            print(e)
+            return None

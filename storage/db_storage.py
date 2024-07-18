@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Implements a connecttion to the mysql database """
-import MySQLdb
+import mysql.connector
 from os import environ
 
 
@@ -15,30 +15,31 @@ class DB_storage():
             user = environ.get("user")
             password = environ.get("password")
             database = environ.get("db")
-            db = MySQLdb.connect(
+            self.db = mysql.connector.connect(
                     host=host,
                     user=user,
-                    passwd=password,
-                    db=database
+                    password=password,
+                    db=database,
+                    port=3306
                     )
-            self.cursor = db.cursor()
+            self.cursor = self.db.cursor()
         except Exception as e:
-            return e
+            print(e)
 
     def get_all_numbers(self):
         """ Gets all the phone numbers wih country code in the database """
         if self.cursor:
             query = "SELECT country_code, phone_number FROM users"
-            numbers_code = self.cursor.execute(query)
+            self.cursor.execute(query)
 
-            return numbers_code
-        return []
+            return self.cursor.fetchall()
+        return ()
 
     def create(self, fname, lname, c_code, phone, country, city, gender):
         """ Inserts into DB storage current users personal info """
         query = "INSERT INTO users({}) VALUES(%s, %s, %s, %s, %s, %s, %s)"
         fields = "first_name, last_name, country_code, {}, {}, {}, {}"
-        fileds.format("phone_number", "country", "city", "gender")
+        fields.format("phone_number", "country", "city", "gender")
         query.format(fields)
         result = self.cursor.execute(
                 query, (

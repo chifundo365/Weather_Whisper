@@ -14,12 +14,14 @@ USE weather_whisper_db;
 
 CREATE TABLE IF NOT EXISTS users(
 	id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-	first_name VARCHAR(100) NOT NULL,
-	last_name VARCHAR(100) NOT NULL,
+	username VARCHAR(100) NOT NULL,
 	country_code VARCHAR(10) NOT NULL,
 	phone_number VARCHAR(50) NOT NULL,
 	country VARCHAR(100) NOT NULL,
+	timezone VARCHAR(100) NOT NULL
 	city VARCHAR(100) NOT NULL,
+	latitude INT(10) NOT NULL,
+	longitude INT(10) NOT NULL,
 	gender VARCHAR(20) NOT NULL
 	);
 

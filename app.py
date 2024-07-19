@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ Starts a Flask web application """
-from flask import Flask, jsonify, render_template, request
-import re
+from flask import Flask, render_template, request
 import storage
+from process_data import ProcessData
 
 
 app = Flask(__name__)
@@ -18,38 +18,22 @@ def home_page():
     """
     if request.method == "GET":
         return render_template("index.html")
-
-    first_name = request.form.get("fname")
-    last_name = request.form.get("lname")
-    country_code = request.form.get("c-code")
-    phone_number = request.form.get("p-number")
-    country = request.form.get("country")
-    city = request.form.get("city")
-    gender = request.form.get("gender")
-
-    validate = validate_user_input(
-            first_name,
-            last_name,
-            country_code,
-            phone_number,
-            country,
-            city,
-            gender
-            )
     
-    if validate == {}:
-       storage.create_subscriber(
-                first_name,
-                last_name,
-                country_code,
-                phone_number,
-                country,
-                city,
-                gender
-                )
-       return render_template("subscribe.html", errors=False)
-    else:
-        return render_template("subscribe.html", errors=validate)
+    try:
+        data = request.form
+        data['timezone']
+        validate_data = ProcessData.validate_user_input(data)
+
+        if len(validate_data) == 0:
+            storage.db.create(**data)
+            return render_template("subscribe.html", errors=False)
+        else:
+            return render_template("subscribe.html", errors= validate_data)
+
+    except Exception as e:
+        return render_template("subscribe.html", errors=True)
+    
+
 
 
 if __name__ == "__main__":

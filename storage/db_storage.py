@@ -4,7 +4,7 @@ import mysql.connector
 from os import environ
 
 
-class DB_storage():
+class DB_storage:
     """
     implements the database storage
     """

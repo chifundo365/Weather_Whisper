@@ -4,7 +4,7 @@ Processes the data received and create new data based on the data receiveid
 """
 
 
-class ProcessData:
+class ProcessData():
     """ 
     Proceses  and validates data got from user
     uses the data to make new valuable data

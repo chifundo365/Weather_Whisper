@@ -57,7 +57,7 @@ class DB_storage:
                     or an empty tuple if empty
         """
         if self.cursor:
-            query = "SELECT country_code, phone_number FROM users"
+            query = "SELECT country_code, phone_number, timezone FROM users"
             self.cursor.execute(query)
             numbers_code = self.cursor.fetchall()
 
@@ -79,7 +79,7 @@ class DB_storage:
         try:
             columns = ", ".join(list(kwargs.keys()))
             values = tuple(kwargs.values())
-            placeholders = "%s, %s, %s, %s, %s, %s, %s, %s, %s"
+            placeholders = "%s" + (", %s" * (len(values) - 1))
             q = "INSERT INTO users({}) VALUES({})"
             query = q.format(columns, placeholders)
 

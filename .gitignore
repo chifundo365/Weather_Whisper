@@ -1,3 +1,4 @@
-*.swp
-*.swo
-__*
+__py*
+.swo
+.swe
+*/__py*

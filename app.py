@@ -21,7 +21,9 @@ def home_page():
     
     try:
         data = request.form
-        data['timezone']
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        data['timezone'] = ProcessData.get_time_zone(latitude, longitude)
         validate_data = ProcessData.validate_user_input(data)
 
         if len(validate_data) == 0:

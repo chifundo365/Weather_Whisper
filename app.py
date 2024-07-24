@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Starts a Flask web application """
 from flask import Flask, render_template, request
+from uuid import uuid4
 import storage
 from process_data import ProcessData
 
@@ -16,8 +17,9 @@ def home_page():
     Route for the default homepage of the site
     Gets the user input from a form and inserts user info in db
     """
+    id  = uuid4()
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", id=id)
     
     try:
         data = request.form
@@ -28,18 +30,19 @@ def home_page():
 
         if len(validate_data) == 0:
             storage.db.create(**data)
-            return render_template("subscribe.html", errors=False)
+            return render_template("subscribe.html", errors=False, id=id)
         else:
-            return render_template("subscribe.html", errors= validate_data)
+            return render_template("subscribe.html", errors= validate_data, id=id)
 
     except Exception as e:
-        return render_template("subscribe.html", errors=True)
+        return render_template("subscribe.html", errors=True, id=id)
     
 
 @app.route("/subsribe",  methods=["GET"], strict_slashes=False)
 def subscribe():
+    id = uuid4()
     """ subscribe page """
-    return render_template("subscribe.hmtl")
+    return render_template("subscribe.html", id=id)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

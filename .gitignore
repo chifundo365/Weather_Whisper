@@ -2,3 +2,4 @@ __py*
 .swo
 .swe
 */__py*
+.vsocode

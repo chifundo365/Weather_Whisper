@@ -6,11 +6,10 @@
     <meta name="author" content="Jerry Kwophi Supernatural (+233247792110)"/>
     <meta name="description" content="ALX Project work"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-
     <title>Weather App</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-     <link href="assets/css/all.css" rel="stylesheet">
-     <script src="assets/js/all.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+     <link href="{{ url_for('static', filename='styles/all.css') }}" rel="stylesheet">
+     <script src="{{ url_for('static', filename='scripts/all.js') }}"></script>
 </head>
 <body>
     <div class="weather-app">
@@ -18,7 +17,7 @@
             <h2 id="city">City</h2>
             <p id="date">Date</p>
             <div class="weather-icon">
-                <img id="current-icon" src="sunny.png" alt="Weather Icon">
+		    <img id="current-icon" src="{{ url_for('static', filename='images/sunny') }}" alt="Weather Icon">
             </div>
             <div class="temperature">
                 <span id="current-temp">0</span>°
@@ -49,11 +48,9 @@
             <div class="forecast" id="forecast-container">
                 <!-- Forecast days will be dynamically added here -->
             </div>
-            <a href="./subscriptionScreen.html">
-                <button class="btn">Subscibe</button>
-            </a>
+	    <a href="{{ url_for('subscribe') }}" class="btn">Subscribe</a>
         </div>
     </div>
-    <script src="assets/js/script.js"></script>
+    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
 </body>
 </html>

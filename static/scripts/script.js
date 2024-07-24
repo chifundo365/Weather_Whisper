@@ -2,7 +2,7 @@ const weatherData = {
     city: "Cape Coast, Ghana",
     date: "Today, 14 July 4:00 PM",
     current: {
-        icon: "sunny.png",
+        icon: "/static/images/sunny.png",
         temperature: 20,
         description: "Cloudy",
         humidity: "42%",
@@ -10,8 +10,8 @@ const weatherData = {
         wind: "18 km/h"
     },
     forecast: [
-        { day: "Mon, 15 July", icon: "rain.png", temperature: 22 },
-        { day: "Tue, 16 July", icon: "thunderstorm.png", temperature: 17 },
+        { day: "Mon, 15 July", icon: "/static/images/rain.png", temperature: 22 },
+        { day: "Tue, 16 July", icon: "/static/images/thunderstorm.png", temperature: 17 },
     ]
 };
 

@@ -1,4 +1,28 @@
-console.log("my id {{id}}");
+
+
+function get_ip() {
+  const url = "https://icanhazip.com/cdn-cgi/trace"
+  $.get(url, (data, status) => {
+    if (status === "sucess") {
+      return typeof(data)
+    }
+  });
+}
+
+
+$(function() {
+  ip = get_ip()
+  console.log(ip)
+
+});
+
+
+
+
+
+
+
+
 const weatherData = {
     city: "Cape Coast, Ghana",
     date: "Today, 14 July 4:00 PM",

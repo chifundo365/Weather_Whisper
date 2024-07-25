@@ -1,3 +1,4 @@
+console.log("my id {{id}}");
 const weatherData = {
     city: "Cape Coast, Ghana",
     date: "Today, 14 July 4:00 PM",

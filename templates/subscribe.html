@@ -3,23 +3,23 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="assets/css/styles.css">
-<link href="{{ url_for('static', filename='styles/all.css', id=id)" rel="stylesheet">
-     <script src="assets/js/all.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+<link href="{{ url_for('static', filename='styles/all.css', id=id) }}" rel="stylesheet">
+     <script src="{{ url_for('static', filename='scripts/all.js', id=id) }}"></script>
 
 </head>
 <body>
 
-<form action="" style="max-width:500px;margin:auto">
+<form action="{{ url_for('validate_form')}}" style="max-width:500px;margin:auto" method="post", enctype="multipart/form-data">
   <h2>SUBSCRIPTION FORM</h2>
   <div class="input-container">
     <i class="fa fa-user icon"></i>
-    <input class="input-field" type="text" placeholder="Username" name="usrnm">
+    <input class="input-field" type="text" placeholder="Username" name="user_name">
   </div>
 
   <div class="input-container">
     <i class="fa fa-phone icon"></i>
-    <input class="input-field" type="text" placeholder="Phone" name="phone">
+    <input class="input-field" type="text" placeholder="Phone" name="phone_number">
   </div>
   <div class="input-container">
     <i class="fa fa-flag icon"></i>
@@ -37,6 +37,6 @@
 
   <button type="submit" class="btn">Register</button>
 </form>
-<a href="./index.html" class="goBack">Go Back</a>
+<a href="{{ url_for('homepage') }}" class="goBack">Go Back</a>
 </body>
 </html>

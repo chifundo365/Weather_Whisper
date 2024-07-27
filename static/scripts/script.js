@@ -1,43 +1,48 @@
 
 
-function get_ip() {
+/**
+ * Gets the ip address of the user
+ * @return {string | undefined}: The ip address or undefined if error
+ */
+async function get_ip() {
   const url = "https://icanhazip.com/cdn-cgi/trace"
-  $.get(url, (data, status) => {
-    if (status === "sucess") {
-      return typeof(data)
+  try {
+    res = await fetch(url)
+
+    if (!res.ok) {
+      throw new Error("Network response was not  okay")
     }
-  });
+    text = await res.text()
+    text  = text.trim().split("\n").map(e => e.split("="));
+    text_obj = Object.fromEntries(text)
+    
+    return text_obj.ip
+  } catch (error) {
+    throw error
+  }
 }
 
-
-$(function() {
-  ip = get_ip()
-  console.log(ip)
-
-});
-
-
-
-
-
-
-
+get_ip.then(ip => {
+  console.log(ip);
+}).catch(error) {
+  console.log(error);
+}
 
 const weatherData = {
-    city: "Cape Coast, Ghana",
-    date: "Today, 14 July 4:00 PM",
-    current: {
-        icon: "/static/images/sunny.png",
-        temperature: 20,
-        description: "Cloudy",
-        humidity: "42%",
-        precipitation: "10%",
-        wind: "18 km/h"
-    },
-    forecast: [
-        { day: "Mon, 15 July", icon: "/static/images/rain.png", temperature: 22 },
-        { day: "Tue, 16 July", icon: "/static/images/thunderstorm.png", temperature: 17 },
-    ]
+  city: "Cape Coast, Ghana",
+  date: "Today, 14 July 4:00 PM",
+  current: {
+    icon: "/static/images/sunny.png",
+    temperature: 20,
+    description: "Cloudy",
+    humidity: "42%",
+    precipitation: "10%",
+    wind: "18 km/h"
+  },
+  forecast: [
+    { day: "Mon, 15 July", icon: "/static/images/rain.png", temperature: 22 },
+    { day: "Tue, 16 July", icon: "/static/images/thunderstorm.png", temperature: 17 },
+  ]
 };
 
 document.getElementById("city").textContent = weatherData.city;
@@ -51,21 +56,21 @@ document.getElementById("wind").textContent = weatherData.current.wind;
 
 const forecastContainer = document.getElementById("forecast-container");
 weatherData.forecast.forEach(day => {
-    const dayDiv = document.createElement("div");
-    dayDiv.className = "day";
+  const dayDiv = document.createElement("div");
+  dayDiv.className = "day";
 
-    const dayName = document.createElement("span");
-    dayName.textContent = day.day;
+  const dayName = document.createElement("span");
+  dayName.textContent = day.day;
 
-    const dayIcon = document.createElement("img");
-    dayIcon.src = day.icon;
+  const dayIcon = document.createElement("img");
+  dayIcon.src = day.icon;
 
-    const dayTemp = document.createElement("span");
-    dayTemp.textContent = `${day.temperature}°`;
+  const dayTemp = document.createElement("span");
+  dayTemp.textContent = `${day.temperature}°`;
 
-    dayDiv.appendChild(dayName);
-    dayDiv.appendChild(dayIcon);
-    dayDiv.appendChild(dayTemp);
+  dayDiv.appendChild(dayName);
+  dayDiv.appendChild(dayIcon);
+  dayDiv.appendChild(dayTemp);
 
-    forecastContainer.appendChild(dayDiv);
+  forecastContainer.appendChild(dayDiv);
 });

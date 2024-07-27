@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Starts a Flask web application """
 from flask import Flask, render_template, request, abort, url_for, jsonify, redirect
+import requests
+import os
 from uuid import uuid4
 import storage
 from process_data import ProcessData
@@ -27,7 +29,7 @@ def subscribe(form_id=None):
         try:
             data = request.args
             if storage.db.create(**data):
-                return "success"
+                return "success your info has been submitted"
             abort(500)
         except Exception  as e:
             print(e)
@@ -52,13 +54,33 @@ def validate_form():
             data['timezone'] = ProcessData.get_time_zone(latitude, longitude)
             validate_data = ProcessData.validate_user_input(data)
 
-            if validate_data:
+            if len(validate_data) == 0:
                 return redirect(url_for("subscribe", form_id=uuid4(), **data))
             else:
                  return jsonify(validate_data)
      except Exception as e:
             error = {"server_error": e}
             return jsonify(error)
+
+
+@app.route("/geolocation/", methods=["GET"], strict_slashes=False)
+def geolocation():
+    """ Gets the geolocation with given data"""
+
+    try:
+        data = request.args
+        ip = data.ip
+
+        url = "https://apiip.net/api/check"
+        data = {"ip": ip, "accessKey": os.environ("APIIP_API_KEY")}
+        r = requests.get(url, params=url)
+
+        if r.status_code < 301:
+            response = r.json()["sucess"] = True
+            return jsonify(response), 200
+
+    except Exception as e:
+        return jsonify({"success": False, "error": e}), 403
 
 
 if __name__ == "__main__":

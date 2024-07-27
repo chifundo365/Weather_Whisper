@@ -51,7 +51,7 @@ class ProcessData():
         """
         Gets the timezone of a place
 
-        input:
+        Args:
             latitude - the latitude of the place
             longitude - longitude of the place
         

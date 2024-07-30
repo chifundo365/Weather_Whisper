@@ -7,8 +7,8 @@
     <meta name="description" content="ALX Project work"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>Weather App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css', id=id) }}">
-    <!--<script src="{{ url_for('static', filename='scripts/all.js') }}?id={{ id }}"></script>-->
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css', id=id) }}">
+    <script src="{{ url_for('static', filename='scripts/all.js') }}?id={{ id }}"></script>-->
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- FontAwesome Fonts -->
@@ -16,17 +16,18 @@
    <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 </head>
 <body>
+	{{ weather['app_temp'] }}
     <div class="weather-app">
         <div class="current-weather">
             <h2 id="city">City</h2>
             <p id="date">Date</p>
             <div class="weather-icon">
-		    <img id="current-icon" src="{{ url_for('static', filename='images/sunny.png', id=id) }}" alt="Weather Icon">
+		    <img id="current-icon" src="https://cdn.weatherbit.io/static/img/icons/{{ weather['icon'] }}.png" alt="Weather Icon">
             </div>
             <div class="temperature">
-                <span id="current-temp">0</span>°
+		    <span id="current-temp">{{ weather['temp'] }}</span>°
             </div>
-            <p id="description">Description</p>
+	    <p id="description"> {{ weather['weather'] }}</p>
 
             <div class="details">
                 <div class="detail" >

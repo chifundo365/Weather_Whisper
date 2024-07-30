@@ -28,7 +28,7 @@ def homepage():
     latitude = location.get("latitude")
     longitude = location.get("longitude")
     weather = ProcessData.get_weather(latitude, longitude) 
-    return jsonify(weather)
+    return render_template("index.html", weather=weather, id=id)
 
 
 @app.route("/subscribe", methods=["GET"], strict_slashes=False)
@@ -72,32 +72,6 @@ def validate_form():
      except Exception as e:
             error = {"server_error": e}
             return jsonify(error)
-
-
-@app.route("/geolocation/", methods=["GET"], strict_slashes=False)
-def geolocation():
-    """ Gets the geolocation with given data"""
-
-    try:
-        data = request.args
-        ip = data.ip
-
-        url = "https://apiip.net/api/check"
-        data = {"ip": ip, "accessKey": os.environ("APIIP_API_KEY")}
-        r = requests.get(url, params=url)
-
-        if r.status_code < 301:
-            response = r.json()["sucess"] = True
-            return jsonify(response), 200
-
-    except Exception as e:
-        return jsonify({"success": False, "error": e}), 403
-
-@app.route("/weather/", strict_slashes=False, methods=["GET"])
-def get_weather():
-    data = dict(request.args)
-    lat = data.get("lat")
-    lon = data.get("lon")
 
 
 if __name__ == "__main__":

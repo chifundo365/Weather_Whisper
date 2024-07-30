@@ -16,8 +16,19 @@ def homepage():
     Route for the default homepage of the site
     """
     id  = uuid4()
-    if request.method == "GET":
-        return render_template("index.html", id=id)
+    
+    if os.environ.get("load_balancer") == "yes":
+        forwaded_for = request.headers.get("X-Forwarded-For")
+        ip_address = forwarded_for.split(',')[0].strip()
+    else:
+        ip_address = request.remote_addr
+    
+    location = ProcessData.geolocation(ip_address)
+    print(location)
+    latitude = location.get("latitude")
+    longitude = location.get("longitude")
+    weather = ProcessData.get_weather(latitude, longitude) 
+    return jsonify(weather)
 
 
 @app.route("/subscribe", methods=["GET"], strict_slashes=False)
@@ -81,6 +92,12 @@ def geolocation():
 
     except Exception as e:
         return jsonify({"success": False, "error": e}), 403
+
+@app.route("/weather/", strict_slashes=False, methods=["GET"])
+def get_weather():
+    data = dict(request.args)
+    lat = data.get("lat")
+    lon = data.get("lon")
 
 
 if __name__ == "__main__":

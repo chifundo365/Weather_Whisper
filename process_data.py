@@ -2,6 +2,8 @@
 """
 Processes the data received and create new data based on the data receiveid
 """
+import requests
+import os
 
 
 class ProcessData():
@@ -70,3 +72,60 @@ class ProcessData():
                 return r.json().get("timeZone")
         except Exception as e:
             return {"error": e}
+
+    @staticmethod
+    def geolocation(ip):
+        """ Gets the geolocation with given data"""
+
+        try:
+            print("trying")
+            url = "https://apiip.net/api/check"
+            data = {"ip": ip, "accessKey": os.environ.get("APIIP_API_KEY")}
+            r = requests.get(url, params=data)
+            print(r)
+            if r.status_code < 301:
+                response = r.json()
+                response["success"] = True
+                return response
+
+        except Exception as e:
+            return {"success": False, "msg": "colud not get your location data"}
+
+
+    @staticmethod
+    def get_weather(latitude, longitude):
+        """
+        Gets the current weather of a place
+
+        Args:
+            latitude: latitude of the place
+            longitude: the longitude of the place
+
+        Returns:
+            dict: a dictionary containing the weather data
+                  or a dictionary with error data
+        """
+        try:
+            url = "https://api.weatherbit.io/v2.0/current"
+            api_key = os.environ.get("WEATHERBIT_API_KEY")
+            print(api_key)
+            data = {"lat": latitude, "lon":longitude, "key":api_key}
+            res = requests.get(url, params=data)
+            
+            print(res)
+            if res.status_code < 301:
+                r = res.json()
+                r["success"] = True
+                return r
+            else:
+                return {
+                        "success": False,
+                        "msg":"could not get your weather data"
+                       }
+        except Exception as e:
+            return {"success": False, "msg": "could not get you weather info"}
+
+
+
+     
+

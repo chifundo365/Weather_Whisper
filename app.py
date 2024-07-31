@@ -18,7 +18,7 @@ def homepage():
     id  = uuid4()
     
     if os.environ.get("load_balancer") == "yes":
-        forwaded_for = request.headers.get("X-Forwarded-For")
+        forwarded_for = request.headers.get("X-Forwarded-For")
         ip_address = forwarded_for.split(',')[0].strip()
     else:
         ip_address = request.remote_addr
@@ -27,8 +27,15 @@ def homepage():
     print(location)
     latitude = location.get("latitude")
     longitude = location.get("longitude")
-    weather = ProcessData.get_weather(latitude, longitude) 
-    return render_template("index.html", weather=weather, id=id)
+    weather = ProcessData.get_weather(latitude, longitude)
+  
+    return render_template(
+            "index.html",
+            weather=weather,
+            id=id,
+            country = location.get('countryName'),
+            country_code = location.get('countryCode')
+            )
 
 
 @app.route("/subscribe", methods=["GET"], strict_slashes=False)

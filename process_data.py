@@ -47,31 +47,6 @@ class ProcessData():
                 errors[field] = "{} is invalid".format(field)
         
         return errors
-    
-    @staticmethod
-    def get_time_zone(latitude, longitude):
-        """
-        Gets the timezone of a place
-
-        Args:
-            latitude - the latitude of the place
-            longitude - longitude of the place
-        
-        Return: (string) timezone
-        """
-        import requests
-
-        headers = {"accept": "application/json"}
-        params = {"latitude": latitude, "longitude": longitude}
-        url = "https://timeapi.io/api/TimeZone/coordinate"
-        
-        
-        try:
-            r = requests.get(url, headers=headers, params=params)
-            if r.status_code == 200:
-                return r.json().get("timeZone")
-        except Exception as e:
-            return {"error": e}
 
     @staticmethod
     def geolocation(ip):
@@ -108,11 +83,10 @@ class ProcessData():
         try:
             url = "https://api.weatherbit.io/v2.0/current"
             api_key = os.environ.get("WEATHERBIT_API_KEY")
-            print(api_key)
+
             data = {"lat": latitude, "lon":longitude, "key":api_key}
             res = requests.get(url, params=data)
             
-            print(res)
             if res.status_code < 301:
                 r = res.json()
                 r["success"] = True
@@ -124,8 +98,35 @@ class ProcessData():
                        }
         except Exception as e:
             return {"success": False, "msg": "could not get you weather info"}
+        
 
+    @staticmethod
+    def get_forecasts(latitude, longitude):
+        """
+        Gets the current weather forecasts of a place in 16 days
 
+        Args:
+            latitude: latitude of the place
+            longitude: the longitude of the place
 
-     
-
+        Returns:
+            dict: a dictionary containing the forecasts data
+                  or a dictionary with error data
+        """
+        try:
+            url = "https://api.weatherbit.io/v2.0/forecast/daily"
+            api_key = os.environ.get("WEATHERBIT_API_KEY")
+            data = {"lat": latitude, "lon":longitude, "key":api_key}
+            res = requests.get(url, params=data)
+            
+            if res.status_code < 301:
+                r = res.json()
+                r["success"] = True
+                return r
+            else:
+                return {
+                        "success": False,
+                        "msg":"could not get your forecasts data"
+                       }
+        except Exception as e:
+            return {"success": False, "msg": "could not get you forecasts info"}

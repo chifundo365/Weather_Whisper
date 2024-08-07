@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, abort, url_for, jsonify, redi
 import requests
 import os
 from uuid import uuid4
+from datetime import datetime
 import storage
 from process_data import ProcessData
 
@@ -22,19 +23,28 @@ def homepage():
         ip_address = forwarded_for.split(',')[0].strip()
     else:
         ip_address = request.remote_addr
-    
+
+    #ip_address = " 137.64.0.17"
+   
     location = ProcessData.geolocation(ip_address)
-    print(location)
     latitude = location.get("latitude")
     longitude = location.get("longitude")
     weather = ProcessData.get_weather(latitude, longitude)
+
+    print(weather)
+    forecasts = ProcessData.get_forecasts(latitude, longitude)['data'][1:8]
+
+    for forecast in forecasts:
+        dt = datetime.strptime(forecast['valid_date'], '%Y-%m-%d')
+        forecast['valid_date'] = (dt.strftime("%A"))
   
     return render_template(
             "index.html",
             weather=weather,
             id=id,
             country = location.get('countryName'),
-            country_code = location.get('countryCode')
+            country_code = location.get('countryCode'),
+            forecasts = forecasts
             )
 
 

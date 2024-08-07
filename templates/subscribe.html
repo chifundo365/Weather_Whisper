@@ -10,6 +10,20 @@
 </head>
 <body>
 
+	<div id="nav">
+		<h1>Weather Whisper</h1>
+		<ul>
+			<li><a href="">search weather for a city</a></li>
+			<li><a href="{{ url_for('subscribe') }}">Subscribe to daily weather info</a></li>
+			<li><a href="#">Contact US</a></li>
+		</ul>
+	</div>
+
+	<div class="showcase">
+		<p>Get weather info the easy way</p>
+		<p>Subscribe to get daily  weather info of your location  via sms 6 O'clock in the morning</p>
+	</div>
+
 <form action="{{ url_for('validate_form')}}" style="max-width:500px;margin:auto" method="post", enctype="multipart/form-data">
   <h2>SUBSCRIPTION FORM</h2>
   <div class="input-container">

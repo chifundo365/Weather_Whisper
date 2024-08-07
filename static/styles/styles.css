@@ -1,109 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
     background-image: url(/static/images/bg.jpg);
     background-size:cover;
+    font-size:14px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    margin: 0;
 }
+
+#nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    align-self: center;
+    background: hsla(0, 0%, 0%, 0.301);
+
+}
+
+#nav  h1 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    padding: 20px;
+}
+
+#nav ul {
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    margin:0 30px 0 auto;
+}
+
+#nav ul li {
+    list-style-type:none;
+}
+
+#nav ul li a {
+    padding: 10px;
+    margin-left:2px;
+    text-decoration: none;
+    background: #17213b;
+    color: #ffff;
+    font-size: 13px;
+    text-wrap: wrap;
+    text-transform: capitalize;
+}
+
+.showcase {
+    width: 100%;
+    text-align: center;
+    justify-self: center;
+    align-items: center;
+    margin: 10px;
+    padding: 20px;
+}
+
+.showcase p {
+    font-size: 19px;
+    color: #ffff;
+}
+
+.showcase p::first-letter {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+
 
 .weather-app {
     background-image: url(/static/images/innerbg.png);
     background-position: center;
     color: white;
-    width: 300px;
+    width: 90%;
+    height: 60vh;
     border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    min-height: 100vh;
+    margin: 2px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .current-weather {
     text-align: center;
     min-height: 60vh;
+    width: 40%;
+    display: flex;
+    margin: 5px 0px;
+    border-radius: 12px;
+    flex-direction: column;
+    align-items: center;
+    background-color: hsla(0, 1%, 27%, 0.116);
 }
 
-.city {
-    padding-top: 1.5rem;
+.current-weather .location{
+    display: flex;
+    margin-top:20px;
+    margin-bottom:20px;
+    text-align: center;
+    align-items: center;
+    height: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.445);
 }
 
-.weather-icon img {
-    width: 100px;
-    height: 100px;
-    margin: 1rem;
+.current-weather .location h2 {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
 }
 
-.temperature {
-    font-size: 48px;
+.current-weather .location img {
+    width: 30px;
+    height: auto;
+    margin-left:10px;
+}
+
+.current-weather p.date {
+    font-size: 14px;
+    color: #f6fbff;
+
+}
+
+.current-weather .weather-image {
+    width: 30%;
+    height: auto;
+    border: 0.5px solid hsla(0, 6%, 67%, 0.26)
+    
+}
+
+.current-weather .temperature {
+    font-size: 40px;
     font-weight: bold;
 }
 
-.details {
+.current-weather .floating-box {
     display: flex;
+    margin-top:auto;
     justify-content: space-around;
-    margin-top: 20px;
     background-color: aquamarine; 
+    width: 70%;
     padding: 1rem; 
     border-radius: 1rem; 
     color:black; 
     font-size: smaller; 
-    position: absolute; 
-    bottom:26%; 
-    left:41%; 
-    display: flex; 
-    gap:0.7rem; 
-    max-width: max-content;
 }
 
-.detail {
-    text-align: center;
+
+.fa {
+    padding: 0.2rem;
+    font-size: 1.5rem;
 }
 
 .fa-tint{
-    font-size:1.5rem;
     color:#008cff; 
-    padding:0.2rem
 }
-.fa-umbrella{
-    font-size:1.5rem;
+
+.fa-tachometer{
     color:#f05dcb; 
-    padding:0.2rem
 }
-.fa-wind{
-    font-size:1.5rem;
+
+.fa-wind {
     color:#000000; 
-    padding:0.2rem
 }
 
-.weekly-forecast {
-    margin-top: 20px;
-    background-color: rgb(255, 255, 255); 
-    min-height: 35vh;  
-    border-radius: 1rem;
-    color:black;
-}
 
-.weekly-forecast h5 {
-    padding-top: 4rem; 
-    padding-left: 2rem;
-}
-
-.forecast {
+.current-forecasts {
     display: flex;
     flex-direction: column;
-}
-
-.day {
-    display: flex;
-    justify-content: space-around;
     align-items: center;
-    margin-top: 5px;
+    justify-content: center;
+    margin: 5px 10px;
+    border-radius: 15px;
+    width: 60%;
+    height: 90%;
+    margin: 5px auto;
+    overflow:hidden;
 }
 
-.day img {
+.current-forecasts h3 {
+    font-size:18px;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.current-forecasts .weekly {
+    width: 100%;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.current-forecasts .weekly table {
+    width: 100%;
+}
+
+.current-forecasts .weekly table tr {
+    padding: 2px;
+}
+
+.current-forecasts .weekly table tr th {
+    font-size: 16px;
+    color: #aedf81;
+    font-weight: 300;
+}
+
+.current-forecasts .weekly table tr td {
+    padding-left:15px;
+    font-size: 15px;
+    font-weight: 200;
+    color: #ffff;
+}
+
+.current-forecasts .weekly table tr td.description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(43, 28, 28, 0.295);
+    outline: none;
+    border: none;
+}
+.current-forecasts .weekly table tr td img {
     width: 30px;
-    height: 30px;
+    margin: 0 10px;
 }
 
 

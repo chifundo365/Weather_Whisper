@@ -1,59 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="author" content="Jerry Kwophi Supernatural (+233247792110)"/>
-		<meta name="description" content="ALX Project work"/>
-		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-		<title>Weather App</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css', id=id) }}">
-		<!--<script src="{{ url_for('static', filename='scripts/all.js') }}?id={{ id }}"></script>-->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" /><!-- FontAwesome Fonts -->
-	</head>
-	<body>
-		<div class="weather-app">
-			<div class="current-weather">
-				<h2 id="city">{{ country  }} {{ weather['data'][0]['city_name'] }}
-					<img alt="country_image" src="https://flagsapi.com/{{ country_code }}/flat/64.png" />
 
-				</h2>
-				<p id="date">{{ weather['data'][0]['datetime']  }}</p>
-				<div class="weather-icon">
-					<img id="current-icon" src="https://cdn.weatherbit.io/static/img/icons/{{ weather['data'][0]['weather']['icon'] }}.png" alt="Weather Icon">
-				</div>
-				<div class="temperature">
-					<span id="current-temp">{{ weather['data'][0]['temp'] }}</span>°
-				</div>
-				<p id="description"> {{ weather['data'][0]['weather']['description'] }}</p>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Jerry Kwophi Supernatural (+233247792110)" />
+	<meta name="description" content="ALX Project work" />
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+	<title>Weather Whisper</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css', id=id) }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+		integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" /><!-- FontAwesome Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet">
+</head>
 
-				<div class="details">
-					<div class="detail" >
-						<i class="fa fa-tint"></i>
-						<div>Humidity</div>
-						<div id="humidity">{{ weather['data'][0]['rh'] }}%</div>
-					</div>
-					<div class="detail">
-						<i class="fa fa-tachometer"></i>
-						<div>Pressure</div>
-						<div id="pressure">{{ weather['data'][0]['pres'] }}mb</div>
-					</div>
-					<div class="detail">
-						<i class="fa fa-wind"></i>
-						<div>Windy</div>
-						<div id="wind">{{ weather['data'][0]['wind_spd'] }} m/s</div>
-					</div>
-				</div>
+<body>
+	<div id="nav">
+		<h1>Weather Whisper</h1>
+		<ul>
+			<li><a href="">search weather for a city</a></li>
+			<li><a href="{{ url_for('subscribe') }}">Subscribe to daily weather info</a></li>
+			<li><a href="#">Contact US</a></li>
+		</ul>
+	</div>
 
+	<div class="showcase">
+		<p>Get weather info the easy way</p>
+		<p>Subscribe to get daily weather info of your location via sms 6 O'clock in the morning</p>
+	</div>
+
+	<div class="weather-app">
+		<div class="current-weather">
+			<div class="location">
+				<h2 class="location_name">{{ weather['data'][0]['city_name'] }}, {{ country_code | lower }} </h2>
+				<img alt="country_image" src="https://flagsapi.com/{{ country_code }}/flat/64.png" />
 			</div>
-			<div class="weekly-forecast" >
-				<h5>Next 2 Days</h5>
-				<div class="forecast" id="forecast-container">
-					<!-- Forecast days will be dynamically added here -->
+			<p class="date">{{ weather['data'][0]['datetime'] }}</p>
+			<img class="weather-image"
+				src="https://cdn.weatherbit.io/static/img/icons/{{ weather['data'][0]['weather']['icon'] }}.png"
+				alt="Weather Icon">
+			<div class="temperature">
+				<span id="current-temp">{{ weather['data'][0]['temp'] }}</span>°C
+			</div>
+			<p class="description"> {{ weather['data'][0]['weather']['description'] }}</p>
+
+			<div class="floating-box">
+				<div class="item">
+					<i class="fa fa-tint"></i>
+					<div>Humidity</div>
+					<div id="humidity">{{ weather['data'][0]['rh'] }}%</div>
 				</div>
-				<a href="{{ url_for('subscribe') }}" class="btn">Subscribe</a>
+				<div class="item">
+					<i class="fa fa-tachometer"></i>
+					<div>Pressure</div>
+					<div id="pressure">{{ weather['data'][0]['pres'] }}mb</div>
+				</div>
+				<div class="item">
+					<i class="fa fa-wind"></i>
+					<div>Windy</div>
+					<div id="wind">{{ weather['data'][0]['wind_spd'] }} m/s</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<div class="current-forecasts">
+			<h3> weekly weather forecasts for {{ weather['data'][0]['city_name'] }}</h3>
+			<div class="weekly">
+				<table>
+
+					<tr>
+						<th></th>
+						<th>Description</th>
+						<th>min</th>
+						<th>max</th>
+					</tr>
+					{% for forecast in forecasts %}
+					<tr>
+						<td>{{ forecast['valid_date'] }}</td>
+						<td class="description" ><img src="https://cdn.weatherbit.io/static/img/icons/{{ forecast['weather']['icon']}}.png"
+								alt="today"> <p>  {{ forecast['weather']['description'] }}</p></td>
+						<td>{{ forecast['min_temp'] }}°C</td>
+						<td>{{ forecast['max_temp'] }}°C</td>
+					</tr>
+					{% endfor %}
+				</table>
 			</div>
 		</div>
-		<script src="{{ url_for('static', filename='scripts/script.js', id=id) }}"></script>
-	</body>
+	</div>
+	<script src="{{ url_for('static', filename='scripts/script.js', id=id) }}"></script>
+</body>
+
 </html>

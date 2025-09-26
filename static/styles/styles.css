@@ -260,8 +260,9 @@ body {
   border: 2px solid dodgerblue;
 }
 
-/* Set a style for the submit button */
-.btn {
+
+/* Responsive button and form styles */
+.btn, .full-width-btn {
   background-color: dodgerblue;
   color: white;
   padding: 15px 20px;
@@ -269,21 +270,78 @@ body {
   cursor: pointer;
   width: 300px;
   opacity: 0.9;
+  border-radius: 8px;
+  font-size: 18px;
+  transition: background 0.2s, opacity 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.btn:hover {
+.btn:hover, .full-width-btn:hover {
   opacity: 1;
+  background-color: #005bb5;
 }
 
-form h2{
+form h2, .form-title {
     text-align: center;
     color:#fff;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.goBack{
-    position: absolute;
-    bottom:13%;
+.goBack, .modern-back {
+    position: static;
+    display: block;
+    margin: 20px auto 0 auto;
     color:#fff;
     text-decoration: none;
-    /* display: block !important; */
+    font-size: 16px;
+    text-align: center;
+    background: none;
+}
+
+/* Card and form container */
+.card-form, .modern-form-container, .responsive-form {
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    padding: 32px 24px;
+    margin: 30px auto;
+    width: 400px;
+    max-width: 95vw;
+}
+
+.form-fields, .responsive-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-row, .responsive-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.input-container, .modern-input, .responsive-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.04);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 0;
+}
+
+.input-field, .modern-input-field {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    background: transparent;
+    color: #222;
+    font-size: 16px;
+}
+
+.input-field:focus, .modern-input-field:focus {
+    border-bottom: 2px solid dodgerblue;
 }

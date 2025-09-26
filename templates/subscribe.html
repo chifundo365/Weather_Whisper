@@ -4,6 +4,56 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+<style>
+@media (max-width: 900px) {
+  .card-form, .modern-form-container {
+    width: 95% !important;
+    margin: 10px auto !important;
+    padding: 10px !important;
+  }
+  .form-fields, .input-row {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0 !important;
+  }
+  .input-container {
+    width: 100% !important;
+    margin-bottom: 10px !important;
+  }
+}
+@media (max-width: 600px) {
+  .navbar, #nav {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 10px !important;
+  }
+  .nav-links {
+    flex-direction: column !important;
+    width: 100% !important;
+    align-items: flex-start !important;
+  }
+  .nav-link {
+    margin: 5px 0 !important;
+    font-size: 16px !important;
+  }
+  .showcase {
+    padding: 10px !important;
+    font-size: 16px !important;
+  }
+  .card-form, .modern-form-container {
+    width: 100% !important;
+    padding: 5px !important;
+  }
+  .form-title {
+    font-size: 18px !important;
+  }
+  .btn, .full-width-btn {
+    width: 100% !important;
+    font-size: 16px !important;
+    padding: 10px !important;
+  }
+}
+</style>
 <link href="{{ url_for('static', filename='styles/all.css', id=id) }}" rel="stylesheet">
      <script src="{{ url_for('static', filename='scripts/all.js', id=id) }}"></script>
 
@@ -30,15 +80,18 @@
 	</div>
 
 <form action="{{ url_for('validate_form')}}" style="max-width:500px;margin:auto" method="post", enctype="multipart/form-data">
-  <div class="modern-form-container card-form">
+  <div class="modern-form-container card-form responsive-form">
     <h2 class="form-title modern-form-title"><i class="fa fa-envelope-open-text"></i> Subscribe for Daily Weather</h2>
     <div class="form-fields">
-      <div class="input-row">
-        <div class="input-container modern-input">
+      <div class="form-fields responsive-fields">
+        <div class="input-row responsive-row">
+        <div class="input-row responsive-row">
+          <div class="input-container modern-input responsive-input">
           <i class="fa fa-user icon"></i>
           <input class="input-field modern-input-field" type="text" placeholder="Username" name="user_name">
         </div>
-        <div class="input-container modern-input">
+        <div class="input-row responsive-row">
+          <div class="input-container modern-input responsive-input">
           <i class="fa fa-phone icon"></i>
           <input class="input-field modern-input-field" type="text" placeholder="Phone" name="phone_number">
         </div>

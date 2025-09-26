@@ -9,6 +9,64 @@
 	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
 	<title>Weather Whisper</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css', id=id) }}">
+	<style>
+	@media (max-width: 900px) {
+		.weather-app, .current-weather, .current-forecasts {
+			flex-direction: column !important;
+			width: 100% !important;
+			min-width: 0 !important;
+			height: auto !important;
+		}
+		.current-weather {
+			width: 90% !important;
+			margin: 10px auto !important;
+		}
+		.current-forecasts {
+			width: 100% !important;
+			margin: 10px auto !important;
+		}
+		.current-forecasts .weekly table tr td.description {
+			flex-direction: column !important;
+			font-size: 14px !important;
+		}
+	}
+	@media (max-width: 600px) {
+		.navbar, #nav {
+			flex-direction: column !important;
+			height: auto !important;
+			padding: 10px !important;
+		}
+		.nav-links {
+			flex-direction: column !important;
+			width: 100% !important;
+			align-items: flex-start !important;
+		}
+		.nav-link {
+			margin: 5px 0 !important;
+			font-size: 16px !important;
+		}
+		.showcase {
+			padding: 10px !important;
+			font-size: 16px !important;
+		}
+		.weather-app {
+			width: 100% !important;
+			padding: 0 !important;
+			margin: 0 !important;
+		}
+		.current-weather {
+			width: 100% !important;
+			padding: 10px !important;
+		}
+		.current-forecasts {
+			width: 100% !important;
+			padding: 10px !important;
+		}
+		.modern-table, .current-forecasts .weekly table {
+			font-size: 12px !important;
+		}
+	}
+	</style>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 		integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" /><!-- FontAwesome Fonts -->
@@ -20,7 +78,7 @@
 </head>
 
 <body>
-	<nav id="nav" class="navbar">
+	<nav id="nav" class="navbar responsive-navbar">
 		<div class="nav-brand">
 			<i class="fa fa-cloud-sun fa-lg"></i>
 			<span>Weather Whisper</span>
@@ -38,7 +96,7 @@
 	</div>
 
 	<div class="weather-app">
-		<div class="current-weather card">
+		<div class="current-weather card responsive-card">
 			<div class="location">
 				<h2 class="location_name">{{ weather['data'][0]['city_name'] }}, {{ country_code | lower }} </h2>
 				<img alt="country_image" class="country-img" src="https://flagsapi.com/{{ country_code }}/flat/64.png" />
@@ -74,7 +132,7 @@
 		
 		<div class="current-forecasts">
 			<h3 class="forecast-title">Weekly Weather Forecasts for {{ weather['data'][0]['city_name'] }}</h3>
-			<div class="weekly">
+			<div class="weekly responsive-weekly">
 				<table class="modern-table">
 					<tr>
 						<th>Date</th>

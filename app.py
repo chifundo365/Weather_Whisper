@@ -27,25 +27,35 @@ def homepage():
     #ip_address = " 137.64.0.17"
    
     location = ProcessData.geolocation(ip_address)
-    latitude = location.get("latitude")
-    longitude = location.get("longitude")
-    weather = ProcessData.get_weather(latitude, longitude)
+    if location is None:
+        # fallback: use default coordinates (e.g., Accra, Ghana)
+        latitude = 5.6037
+        longitude = -0.1870
+        country = "Ghana"
+        country_code = "GH"
+    else:
+        latitude = location.get("latitude")
+        longitude = location.get("longitude")
+        country = location.get('countryName')
+        country_code = location.get('countryCode')
 
+    weather = ProcessData.get_weather(latitude, longitude)
     print(weather)
-    forecasts = ProcessData.get_forecasts(latitude, longitude)['data'][1:8]
+    forecasts_data = ProcessData.get_forecasts(latitude, longitude)
+    forecasts = forecasts_data.get('data', [])[1:8] if forecasts_data and 'data' in forecasts_data else []
 
     for forecast in forecasts:
         dt = datetime.strptime(forecast['valid_date'], '%Y-%m-%d')
         forecast['valid_date'] = (dt.strftime("%A"))
-  
+
     return render_template(
-            "index.html",
-            weather=weather,
-            id=id,
-            country = location.get('countryName'),
-            country_code = location.get('countryCode'),
-            forecasts = forecasts
-            )
+        "index.html",
+        weather=weather,
+        id=id,
+        country=country,
+        country_code=country_code,
+        forecasts=forecasts
+    )
 
 
 @app.route("/subscribe", methods=["GET"], strict_slashes=False)

@@ -24,9 +24,10 @@ def homepage():
     else:
         ip_address = request.remote_addr
 
-    #ip_address = " 137.64.0.17"
+    ip_address = "192.168.43.160"
    
     location = ProcessData.geolocation(ip_address)
+    print(location)
     if location is None:
         # fallback: use default coordinates (e.g., Accra, Ghana)
         latitude = 5.6037

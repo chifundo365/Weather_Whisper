@@ -30,29 +30,37 @@
 	</div>
 
 <form action="{{ url_for('validate_form')}}" style="max-width:500px;margin:auto" method="post", enctype="multipart/form-data">
-  <div class="modern-form-container">
-    <h2 class="form-title modern-form-title"><i class="fa fa-envelope-open-text"></i> Subscription Form</h2>
-    <div class="input-container modern-input">
-      <i class="fa fa-user icon"></i>
-      <input class="input-field modern-input-field" type="text" placeholder="Username" name="user_name">
+  <div class="modern-form-container card-form">
+    <h2 class="form-title modern-form-title"><i class="fa fa-envelope-open-text"></i> Subscribe for Daily Weather</h2>
+    <div class="form-fields">
+      <div class="input-row">
+        <div class="input-container modern-input">
+          <i class="fa fa-user icon"></i>
+          <input class="input-field modern-input-field" type="text" placeholder="Username" name="user_name">
+        </div>
+        <div class="input-container modern-input">
+          <i class="fa fa-phone icon"></i>
+          <input class="input-field modern-input-field" type="text" placeholder="Phone" name="phone_number">
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-container modern-input">
+          <i class="fa fa-flag icon"></i>
+          <input class="input-field modern-input-field" type="text" placeholder="Country" name="country">
+        </div>
+        <div class="input-container modern-input">
+          <i class="fa fa-city icon"></i>
+          <input class="input-field modern-input-field" type="text" placeholder="City" name="city">
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-container modern-input">
+          <i class="fa fa-user icon"></i>
+          <input class="input-field modern-input-field" type="text" placeholder="Gender" name="gender">
+        </div>
+      </div>
     </div>
-    <div class="input-container modern-input">
-      <i class="fa fa-phone icon"></i>
-      <input class="input-field modern-input-field" type="text" placeholder="Phone" name="phone_number">
-    </div>
-    <div class="input-container modern-input">
-      <i class="fa fa-flag icon"></i>
-      <input class="input-field modern-input-field" type="text" placeholder="Country" name="country">
-    </div>
-    <div class="input-container modern-input">
-      <i class="fa fa-city icon"></i>
-      <input class="input-field modern-input-field" type="text" placeholder="City" name="city">
-    </div>
-    <div class="input-container modern-input">
-      <i class="fa fa-user icon"></i>
-      <input class="input-field modern-input-field" type="text" placeholder="Gender" name="gender">
-    </div>
-    <button type="submit" class="btn modern-btn"><i class="fa fa-paper-plane"></i> Register</button>
+    <button type="submit" class="btn modern-btn full-width-btn"><i class="fa fa-paper-plane"></i> Register</button>
     <a href="{{ url_for('homepage') }}" class="goBack modern-back"><i class="fa fa-arrow-left"></i> Go Back</a>
   </div>
 </form>

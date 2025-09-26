@@ -20,49 +20,52 @@
 </head>
 
 <body>
-	<div id="nav">
-		<h1>Weather Whisper</h1>
-		<ul>
-			<li><a href="">search weather for a city</a></li>
-			<li><a href="{{ url_for('subscribe') }}">Subscribe to daily weather info</a></li>
-			<li><a href="#">Contact US</a></li>
+	<nav id="nav" class="navbar">
+		<div class="nav-brand">
+			<i class="fa fa-cloud-sun fa-lg"></i>
+			<span>Weather Whisper</span>
+		</div>
+		<ul class="nav-links">
+			<li><a href="" class="nav-link">Search Weather</a></li>
+			<li><a href="{{ url_for('subscribe') }}" class="nav-link">Subscribe</a></li>
+			<li><a href="#" class="nav-link">Contact Us</a></li>
 		</ul>
-	</div>
+	</nav>
 
 	<div class="showcase">
-		<p>Get weather info the easy way</p>
-		<p>Subscribe to get daily weather info of your location via sms 6 O'clock in the morning</p>
+		<h2 class="showcase-title">Get weather info the easy way</h2>
+		<p class="showcase-desc">Subscribe to get daily weather info of your location via SMS at 6 AM</p>
 	</div>
 
 	<div class="weather-app">
-		<div class="current-weather">
+		<div class="current-weather card">
 			<div class="location">
 				<h2 class="location_name">{{ weather['data'][0]['city_name'] }}, {{ country_code | lower }} </h2>
-				<img alt="country_image" src="https://flagsapi.com/{{ country_code }}/flat/64.png" />
+				<img alt="country_image" class="country-img" src="https://flagsapi.com/{{ country_code }}/flat/64.png" />
 			</div>
-			<p class="date">{{ weather['data'][0]['datetime'] }}</p>
+			<p class="date"><i class="fa fa-calendar-day"></i> {{ weather['data'][0]['datetime'] }}</p>
 			<img class="weather-image"
 				src="https://cdn.weatherbit.io/static/img/icons/{{ weather['data'][0]['weather']['icon'] }}.png"
 				alt="Weather Icon">
 			<div class="temperature">
 				<span id="current-temp">{{ weather['data'][0]['temp'] }}</span>°C
 			</div>
-			<p class="description"> {{ weather['data'][0]['weather']['description'] }}</p>
+			<p class="description"> <i class="fa fa-info-circle"></i> {{ weather['data'][0]['weather']['description'] }}</p>
 
-			<div class="floating-box">
+			<div class="floating-box modern-box">
 				<div class="item">
 					<i class="fa fa-tint"></i>
 					<div>Humidity</div>
 					<div id="humidity">{{ weather['data'][0]['rh'] }}%</div>
 				</div>
 				<div class="item">
-					<i class="fa fa-tachometer"></i>
+					<i class="fa fa-tachometer-alt"></i>
 					<div>Pressure</div>
 					<div id="pressure">{{ weather['data'][0]['pres'] }}mb</div>
 				</div>
 				<div class="item">
 					<i class="fa fa-wind"></i>
-					<div>Windy</div>
+					<div>Wind</div>
 					<div id="wind">{{ weather['data'][0]['wind_spd'] }} m/s</div>
 				</div>
 			</div>
@@ -70,21 +73,22 @@
 		</div>
 		
 		<div class="current-forecasts">
-			<h3> weekly weather forecasts for {{ weather['data'][0]['city_name'] }}</h3>
+			<h3 class="forecast-title">Weekly Weather Forecasts for {{ weather['data'][0]['city_name'] }}</h3>
 			<div class="weekly">
-				<table>
-
+				<table class="modern-table">
 					<tr>
-						<th></th>
+						<th>Date</th>
 						<th>Description</th>
-						<th>min</th>
-						<th>max</th>
+						<th>Min</th>
+						<th>Max</th>
 					</tr>
 					{% for forecast in forecasts %}
 					<tr>
 						<td>{{ forecast['valid_date'] }}</td>
-						<td class="description" ><img src="https://cdn.weatherbit.io/static/img/icons/{{ forecast['weather']['icon']}}.png"
-								alt="today"> <p>  {{ forecast['weather']['description'] }}</p></td>
+						<td class="description" >
+							<img src="https://cdn.weatherbit.io/static/img/icons/{{ forecast['weather']['icon']}}.png" alt="today" style="vertical-align:middle; margin-right:8px;"> 
+							<span>{{ forecast['weather']['description'] }}</span>
+						</td>
 						<td>{{ forecast['min_temp'] }}°C</td>
 						<td>{{ forecast['max_temp'] }}°C</td>
 					</tr>

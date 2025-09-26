@@ -3,3 +3,5 @@ __py*
 .swe
 */__py*
 .vsocode
+run_app.sh
+*.log

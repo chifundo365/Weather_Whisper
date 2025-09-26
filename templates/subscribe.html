@@ -10,47 +10,50 @@
 </head>
 <body>
 
-	<div id="nav">
-		<h1>Weather Whisper</h1>
-		<ul>
-			<li><a href="">search weather for a city</a></li>
-			<li><a href="{{ url_for('subscribe') }}">Subscribe to daily weather info</a></li>
-			<li><a href="#">Contact US</a></li>
-		</ul>
-	</div>
+  <nav id="nav" class="navbar">
+    <div class="nav-brand">
+      <i class="fa fa-cloud-sun fa-lg"></i>
+      <span>Weather Whisper</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="" class="nav-link">Search Weather</a></li>
+      <li><a href="{{ url_for('subscribe') }}" class="nav-link">Subscribe</a></li>
+      <li><a href="#" class="nav-link">Contact Us</a></li>
+    </ul>
+  </nav>
 
 	<div class="showcase">
-		<p>Get weather info the easy way</p>
-		<p>Subscribe to get daily  weather info of your location  via sms 6 O'clock in the morning</p>
+    <h2 class="showcase-title">Get weather info the easy way</h2>
+    <p class="showcase-desc">Subscribe to get daily weather info of your location via SMS at 6 AM</p>
 	</div>
 
 <form action="{{ url_for('validate_form')}}" style="max-width:500px;margin:auto" method="post", enctype="multipart/form-data">
-  <h2>SUBSCRIPTION FORM</h2>
-  <div class="input-container">
+  <h2 class="form-title">Subscription Form</h2>
+  <div class="input-container modern-input">
     <i class="fa fa-user icon"></i>
     <input class="input-field" type="text" placeholder="Username" name="user_name">
   </div>
 
-  <div class="input-container">
+  <div class="input-container modern-input">
     <i class="fa fa-phone icon"></i>
     <input class="input-field" type="text" placeholder="Phone" name="phone_number">
   </div>
-  <div class="input-container">
+  <div class="input-container modern-input">
     <i class="fa fa-flag icon"></i>
     <input class="input-field" type="text" placeholder="Country" name="country">
   </div>
-  <div class="input-container">
+  <div class="input-container modern-input">
     <i class="fa fa-city icon"></i>
     <input class="input-field" type="text" placeholder="City" name="city">
   </div>
   
-  <div class="input-container">
+  <div class="input-container modern-input">
     <i class="fa fa-user icon"></i>
     <input class="input-field" type="text" placeholder="Gender" name="gender">
   </div>
 
-  <button type="submit" class="btn">Register</button>
+  <button type="submit" class="btn modern-btn">Register</button>
 </form>
-<a href="{{ url_for('homepage') }}" class="goBack">Go Back</a>
+<a href="{{ url_for('homepage') }}" class="goBack modern-back">Go Back</a>
 </body>
 </html>

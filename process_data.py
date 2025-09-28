@@ -13,58 +13,30 @@ class ProcessData():
     """
 
     @staticmethod
-    def validate_user_input(*args, **kwargs):
-        """
-        Validates user info input
-
-        Args:
-            args (tuple): list of arguments(unused)
-            kwargs (dict): key value pairs of input fields
-
-        Returns:
-            a dict with fields and the associated errors or
-            an empty dict if no errors 
-        """
-        import re
-
-
-        field_re = {
-                "user_name": r"^[a-zA-Z]+$",
-                "country_code": r"^[0-9]+$",
-                "phone_number": r"^[0-9]+$",
-                "country": r"^[a-zA-Z]*",
-                "city": r"^[a-zA-Z]*",
-                "gender": r"^[a-zA-Z]+$",
-                "longitude": r"^[0-9]+$",
-                "latitude": r"^[0-9]+$"
-                }
-        errors = {}
-
-        for  field in field_re.keys():
-            if field not in kwargs.keys():
-                errors[field] = "Missing {}".format(field)
-            elif not re.match(field_re.get(field), kwargs.get(field)):
-                errors[field] = "{} is invalid".format(field)
-        
-        return errors
-
-    @staticmethod
     def geolocation(ip):
         """ Gets the geolocation with given data"""
 
         try:
-            print("trying")
-            url = "https://apiip.net/api/check"
-            data = {"ip": ip, "accessKey": os.environ.get("APIIP_API_KEY")}
-            r = requests.get(url, params=data)
-            print(r)
+            print(f"ip address supplied: {ip}")
+            api_key = os.environ.get("APIIP_API_KEY")
+            url = f"https://apiip.net/api/check?ip={ip}&accessKey={api_key}"
+            print(f"URL being called: {url}")
+            
+            # Add timeout and SSL verification settings to handle connection issues
+            r = requests.get(url, timeout=10, verify=True)
+            print(f"Status code: {r.status_code}")
+            print(f"Response: {r.text}")
             if r.status_code < 301:
                 response = r.json()
                 response["success"] = True
                 return response
+            else:
+                print(f"API returned status code: {r.status_code}")
+                return {"success": False, "msg": f"API error: {r.status_code}"}
 
         except Exception as e:
-            return {"success": False, "msg": "colud not get your location data"}
+            print(f"Exception occurred: {e}")
+            return {"success": False, "msg": "could not get your location data"}
 
 
     @staticmethod
@@ -83,9 +55,18 @@ class ProcessData():
         try:
             url = "https://api.weatherbit.io/v2.0/current"
             api_key = os.environ.get("WEATHERBIT_API_KEY")
+            
+            print(f"Weather API Key: {'SET' if api_key else 'NOT SET'}")
+            print(f"Latitude: {latitude}, Longitude: {longitude}")
 
-            data = {"lat": latitude, "lon":longitude, "key":api_key}
-            res = requests.get(url, params=data)
+            data = {"lat": latitude, "lon": longitude, "key": api_key}
+            print(f"Weather API URL: {url}")
+            print(f"Weather API params: {data}")
+            
+            # Add timeout and SSL verification settings to handle connection issues
+            res = requests.get(url, params=data, timeout=10, verify=True)
+            print(f"Weather API Status code: {res.status_code}")
+            print(f"Weather API Response: {res.text}")
             
             if res.status_code < 301:
                 r = res.json()
@@ -94,10 +75,32 @@ class ProcessData():
             else:
                 return {
                         "success": False,
-                        "msg":"could not get your weather data"
+                        "msg": f"Weather API error: {res.status_code} - {res.text}"
                        }
         except Exception as e:
-            return {"success": False, "msg": "could not get you weather info"}
+            print(f"Weather API Exception: {e}")
+            return {"success": False, "msg": f"Could not get weather info: {str(e)}"}
+
+
+    @staticmethod
+    def get_time_zone(latitude, longitude):
+        """
+        Gets the timezone for given coordinates
+        
+        Args:
+            latitude: latitude of the place
+            longitude: longitude of the place
+            
+        Returns:
+            str: timezone string or None if failed
+        """
+        try:
+            # You can use a timezone API here or return a default
+            # For now, returning a default timezone
+            return "UTC"
+        except Exception as e:
+            print(f"Timezone API Exception: {e}")
+            return "UTC"
         
 
     @staticmethod
@@ -116,9 +119,12 @@ class ProcessData():
         try:
             url = "https://api.weatherbit.io/v2.0/forecast/daily"
             api_key = os.environ.get("WEATHERBIT_API_KEY")
+            print('Forecast API Key:', api_key)
             data = {"lat": latitude, "lon":longitude, "key":api_key}
-            res = requests.get(url, params=data)
-            
+            # Add timeout and SSL verification settings to handle connection issues
+            res = requests.get(url, params=data, timeout=10, verify=True)
+            print(f"Forecast API Status code: {res.status_code}")
+            print(f"Forecast API Response: {res.text}")
             if res.status_code < 301:
                 r = res.json()
                 r["success"] = True

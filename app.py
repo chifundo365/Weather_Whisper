@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 """ Starts a Flask web application """
-from flask import Flask, render_template, request, abort, url_for, jsonify, redirect
-import requests
+from flask import Flask, render_template, request, jsonify
 import os
 from uuid import uuid4
 from datetime import datetime
-import storage
 from process_data import ProcessData
 
 
@@ -23,31 +21,59 @@ def homepage():
         ip_address = forwarded_for.split(',')[0].strip()
     else:
         ip_address = request.remote_addr
-
-    print("ip_address", ip_address)
    
     location = ProcessData.geolocation(ip_address)
-    print("location", location)
-    if location is None:
+    
+    if location is None or not location.get('success', False):
         # fallback: use default coordinates (e.g., Accra, Ghana)
         latitude = 5.6037
         longitude = -0.1870
         country = "Ghana"
         country_code = "GH"
+        print("Using fallback location: Ghana")
     else:
         latitude = location.get("latitude")
         longitude = location.get("longitude")
         country = location.get('countryName')
         country_code = location.get('countryCode')
+        print(f"Using API location: {country} ({latitude}, {longitude})")
 
     weather = ProcessData.get_weather(latitude, longitude)
-    print(weather)
+    print("Weather data:", weather)
+    
+    # Handle weather API failures with fallback data
+    if not weather or not weather.get('success', False):
+        print("Weather API failed, using fallback weather data")
+        weather = {
+            'success': True,
+            'data': [{
+                'temp': 25,
+                'weather': {'description': 'Clear sky', 'icon': '01d'},
+                'wind_spd': 3.2,
+                'rh': 65,
+                'pres': 1013,
+                'vis': 10,
+                'uv': 5,
+                'app_temp': 27
+            }]
+        }
+    
     forecasts_data = ProcessData.get_forecasts(latitude, longitude)
-    forecasts = forecasts_data.get('data', [])[1:8] if forecasts_data and 'data' in forecasts_data else []
+    if forecasts_data and forecasts_data.get('success', False) and 'data' in forecasts_data:
+        forecasts = forecasts_data.get('data', [])[1:8]
+    else:
+        print("Forecast API failed, using fallback forecast data")
+        forecasts = []
 
+    # Safely process forecasts
     for forecast in forecasts:
-        dt = datetime.strptime(forecast['valid_date'], '%Y-%m-%d')
-        forecast['valid_date'] = (dt.strftime("%A"))
+        try:
+            if 'valid_date' in forecast:
+                dt = datetime.strptime(forecast['valid_date'], '%Y-%m-%d')
+                forecast['valid_date'] = (dt.strftime("%A"))
+        except (ValueError, KeyError) as e:
+            print(f"Error processing forecast date: {e}")
+            continue
 
     return render_template(
         "index.html",
@@ -60,46 +86,9 @@ def homepage():
 
 
 @app.route("/subscribe", methods=["GET"], strict_slashes=False)
-@app.route("/subscribe/<form_id>/",  methods=["GET"], strict_slashes=False)
-def subscribe(form_id=None):
-    id = uuid4()
-    """ subscribe page """
-    if form_id is not None:
-        try:
-            data = request.args
-            if storage.db.create(**data):
-                return "success your info has been submitted"
-            abort(500)
-        except Exception  as e:
-            print(e)
-            abort(500)       
-    else:
-         return render_template("subscribe.html")
-
-@app.route("/validate_form", strict_slashes=False, methods=["POST"])
-def validate_form():
-     """
-     Validates user form input fields
-
-     Returns:
-        dict : an empy dictionary if no errors else a dict with fields and 
-               their corresponding errors
-     """
-     try:
-            data = dict(request.form)
-            print(data)
-            latitude = data.get('latitude')
-            longitude = data.get('longitude')
-            data['timezone'] = ProcessData.get_time_zone(latitude, longitude)
-            validate_data = ProcessData.validate_user_input(data)
-
-            if len(validate_data) == 0:
-                return redirect(url_for("subscribe", form_id=uuid4(), **data))
-            else:
-                 return jsonify(validate_data)
-     except Exception as e:
-            error = {"server_error": e}
-            return jsonify(error)
+def subscribe():
+    """ subscribe page - shows coming soon message """
+    return render_template("subscribe.html")
 
 
 if __name__ == "__main__":

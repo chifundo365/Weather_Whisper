@@ -1,121 +1,411 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-<style>
-@media (max-width: 900px) {
-  .card-form, .modern-form-container {
-    width: 95% !important;
-    margin: 10px auto !important;
-    padding: 10px !important;
-  }
-  .form-fields, .input-row {
-    flex-direction: column !important;
-    width: 100% !important;
-    gap: 0 !important;
-  }
-  .input-container {
-    width: 100% !important;
-    margin-bottom: 10px !important;
-  }
-}
-@media (max-width: 600px) {
-  .navbar, #nav {
-    flex-direction: column !important;
-    height: auto !important;
-    padding: 10px !important;
-  }
-  .nav-links {
-    flex-direction: column !important;
-    width: 100% !important;
-    align-items: flex-start !important;
-  }
-  .nav-link {
-    margin: 5px 0 !important;
-    font-size: 16px !important;
-  }
-  .showcase {
-    padding: 10px !important;
-    font-size: 16px !important;
-  }
-  .card-form, .modern-form-container {
-    width: 100% !important;
-    padding: 5px !important;
-  }
-  .form-title {
-    font-size: 18px !important;
-  }
-  .btn, .full-width-btn {
-    width: 100% !important;
-    font-size: 16px !important;
-    padding: 10px !important;
-  }
-}
-</style>
-<link href="{{ url_for('static', filename='styles/all.css', id=id) }}" rel="stylesheet">
-     <script src="{{ url_for('static', filename='scripts/all.js', id=id) }}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Whisper - Coming Soon</title>
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-float 15s infinite linear;
+        }
+
+        .particle:nth-child(1) {
+            width: 6px;
+            height: 6px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 8px;
+            height: 8px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 5s;
+        }
+
+        .particle:nth-child(3) {
+            width: 4px;
+            height: 4px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        }
+
+        .coming-soon-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            text-align: center;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: card-entrance 1s ease-out;
+        }
+
+        @keyframes card-entrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .coming-soon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .icon-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .main-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+            }
+            50% { 
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 20px rgba(255,255,255,0.6));
+            }
+        }
+
+        .coming-soon-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .coming-soon-subtitle {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .feature-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        .features-preview {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .feature-item i {
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .coming-soon-card {
+                padding: 3rem 2rem;
+            }
+
+            .coming-soon-title {
+                font-size: 2rem;
+            }
+
+            .coming-soon-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .feature-description {
+                font-size: 1rem;
+            }
+
+            .main-icon {
+                font-size: 3rem;
+            }
+
+            .features-preview {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .coming-soon-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .coming-soon-title {
+                font-size: 1.75rem;
+            }
+
+            .back-button {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <!-- Floating particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
 
-  <nav id="nav" class="navbar modern-navbar">
-    <div class="nav-brand modern-nav-brand">
-      <i class="fa fa-cloud-sun fa-lg"></i>
-      <span>Weather Whisper</span>
-    </div>
-    <ul class="nav-links modern-nav-links">
-      <li><a href="" class="nav-link modern-nav-link">Search Weather</a></li>
-      <li><a href="{{ url_for('subscribe') }}" class="nav-link modern-nav-link active">Subscribe</a></li>
-      <li><a href="#" class="nav-link modern-nav-link">Contact Us</a></li>
-    </ul>
-  </nav>
+    <div class="container">
+        <div class="coming-soon-card">
+            <div class="icon-container">
+                <i class="fas fa-rocket main-icon"></i>
+            </div>
+            
+            <h1 class="coming-soon-title">Feature Coming Soon!</h1>
+            <p class="coming-soon-subtitle">We're Working on Something Amazing</p>
+            
+            <p class="feature-description">
+                Our weather subscription service is currently under development. Soon you'll be able to receive personalized weather updates, alerts, and forecasts directly to your phone. Stay tuned for an incredible weather experience!
+            </p>
 
-	<div class="showcase">
-    <div class="showcase modern-showcase">
-      <h2 class="showcase-title modern-showcase-title">Get weather info the easy way</h2>
-      <p class="showcase-desc modern-showcase-desc">Subscribe to get daily weather info of your location via SMS at 6 AM</p>
-    </div>
-	</div>
+            <div class="features-preview">
+                <div class="feature-item">
+                    <i class="fas fa-bell"></i>
+                    <h3>Smart Alerts</h3>
+                    <p>Get notified about weather changes that matter to you</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>SMS Updates</h3>
+                    <p>Receive weather updates directly on your mobile device</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Forecasts</h3>
+                    <p>Personalized weather forecasts for your location</p>
+                </div>
+            </div>
 
-<form action="{{ url_for('validate_form')}}" style="max-width:500px;margin:auto" method="post", enctype="multipart/form-data">
-  <div class="modern-form-container card-form responsive-form">
-    <h2 class="form-title modern-form-title"><i class="fa fa-envelope-open-text"></i> Subscribe for Daily Weather</h2>
-    <div class="form-fields">
-      <div class="form-fields responsive-fields">
-        <div class="input-row responsive-row">
-        <div class="input-row responsive-row">
-          <div class="input-container modern-input responsive-input">
-          <i class="fa fa-user icon"></i>
-          <input class="input-field modern-input-field" type="text" placeholder="Username" name="user_name">
+            <a href="{{ url_for('homepage') }}" class="back-button">
+                <i class="fas fa-cloud-sun"></i>
+                Back to Weather Data
+            </a>
         </div>
-        <div class="input-row responsive-row">
-          <div class="input-container modern-input responsive-input">
-          <i class="fa fa-phone icon"></i>
-          <input class="input-field modern-input-field" type="text" placeholder="Phone" name="phone_number">
-        </div>
-      </div>
-      <div class="input-row">
-        <div class="input-container modern-input">
-          <i class="fa fa-flag icon"></i>
-          <input class="input-field modern-input-field" type="text" placeholder="Country" name="country">
-        </div>
-        <div class="input-container modern-input">
-          <i class="fa fa-city icon"></i>
-          <input class="input-field modern-input-field" type="text" placeholder="City" name="city">
-        </div>
-      </div>
-      <div class="input-row">
-        <div class="input-container modern-input">
-          <i class="fa fa-user icon"></i>
-          <input class="input-field modern-input-field" type="text" placeholder="Gender" name="gender">
-        </div>
-      </div>
     </div>
-    <button type="submit" class="btn modern-btn full-width-btn"><i class="fa fa-paper-plane"></i> Register</button>
-    <a href="{{ url_for('homepage') }}" class="goBack modern-back"><i class="fa fa-arrow-left"></i> Go Back</a>
-  </div>
-</form>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate feature items on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.feature-item').forEach(item => {
+                observer.observe(item);
+            });
+
+            // Add hover effect to the main card
+            const card = document.querySelector('.coming-soon-card');
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+
+        // Add CSS for fadeInUp animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>

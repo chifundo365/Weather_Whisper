@@ -5,3 +5,4 @@ __py*
 .vsocode
 run_app.sh
 *.log
+start.sh

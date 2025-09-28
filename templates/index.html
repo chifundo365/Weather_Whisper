@@ -412,10 +412,247 @@
 				font-size: 3rem;
 			}
 		}
+
+		/* Weather Loading Spinner */
+		.weather-loader {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: var(--primary-gradient);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			transition: opacity 0.5s ease, visibility 0.5s ease;
+		}
+
+		.weather-loader.hidden {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.spinner-container {
+			position: relative;
+			margin-bottom: 2rem;
+		}
+
+		/* Animated Weather Icons Spinner */
+		.weather-spinner {
+			width: 120px;
+			height: 120px;
+			position: relative;
+			animation: rotate 3s linear infinite;
+		}
+
+		.weather-spinner i {
+			position: absolute;
+			font-size: 2rem;
+			color: rgba(255, 255, 255, 0.8);
+			animation: float-icon 2s ease-in-out infinite;
+		}
+
+		.weather-spinner .icon-1 {
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			animation-delay: 0s;
+		}
+
+		.weather-spinner .icon-2 {
+			top: 50%;
+			right: 0;
+			transform: translateY(-50%);
+			animation-delay: 0.5s;
+		}
+
+		.weather-spinner .icon-3 {
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			animation-delay: 1s;
+		}
+
+		.weather-spinner .icon-4 {
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+			animation-delay: 1.5s;
+		}
+
+		@keyframes rotate {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		@keyframes float-icon {
+			0%, 100% { 
+				transform: translateY(0px) scale(1);
+				opacity: 0.6;
+			}
+			50% { 
+				transform: translateY(-10px) scale(1.1);
+				opacity: 1;
+			}
+		}
+
+		/* Central Sun Animation */
+		.sun-center {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 3rem;
+			color: #ffd700;
+			animation: pulse-sun 2s ease-in-out infinite;
+		}
+
+		@keyframes pulse-sun {
+			0%, 100% { 
+				transform: translate(-50%, -50%) scale(1);
+				filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+			}
+			50% { 
+				transform: translate(-50%, -50%) scale(1.1);
+				filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+			}
+		}
+
+		/* Loading Text */
+		.loading-text {
+			color: var(--text-primary);
+			font-size: 1.5rem;
+			font-weight: 600;
+			font-family: 'Outfit', sans-serif;
+			margin-bottom: 1rem;
+			animation: fade-text 2s ease-in-out infinite;
+		}
+
+		.loading-subtext {
+			color: var(--text-secondary);
+			font-size: 1rem;
+			font-weight: 400;
+			text-align: center;
+			max-width: 300px;
+			line-height: 1.5;
+		}
+
+		@keyframes fade-text {
+			0%, 100% { opacity: 0.7; }
+			50% { opacity: 1; }
+		}
+
+		/* Progress Bar */
+		.progress-container {
+			width: 200px;
+			height: 4px;
+			background: rgba(255, 255, 255, 0.2);
+			border-radius: 2px;
+			margin-top: 2rem;
+			overflow: hidden;
+		}
+
+		.progress-bar {
+			height: 100%;
+			background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4, #45a7ff);
+			background-size: 200% 100%;
+			border-radius: 2px;
+			animation: progress-flow 2s linear infinite;
+		}
+
+		@keyframes progress-flow {
+			0% { 
+				width: 0%;
+				background-position: 0% 50%;
+			}
+			50% {
+				width: 70%;
+				background-position: 100% 50%;
+			}
+			100% { 
+				width: 100%;
+				background-position: 200% 50%;
+			}
+		}
+
+		/* Floating Weather Particles */
+		.weather-particle {
+			position: absolute;
+			color: rgba(255, 255, 255, 0.3);
+			font-size: 1rem;
+			animation: float-particle 4s ease-in-out infinite;
+			pointer-events: none;
+		}
+
+		.weather-particle:nth-child(1) {
+			top: 20%;
+			left: 10%;
+			animation-delay: 0s;
+		}
+
+		.weather-particle:nth-child(2) {
+			top: 30%;
+			right: 15%;
+			animation-delay: 1s;
+		}
+
+		.weather-particle:nth-child(3) {
+			bottom: 30%;
+			left: 20%;
+			animation-delay: 2s;
+		}
+
+		.weather-particle:nth-child(4) {
+			bottom: 20%;
+			right: 25%;
+			animation-delay: 3s;
+		}
+
+		@keyframes float-particle {
+			0%, 100% { 
+				transform: translateY(0px) rotate(0deg);
+				opacity: 0.3;
+			}
+			50% { 
+				transform: translateY(-20px) rotate(180deg);
+				opacity: 0.6;
+			}
+		}
 	</style>
 </head>
 
 <body>
+	<!-- Weather Loading Spinner -->
+	<div class="weather-loader" id="weatherLoader">
+		<!-- Floating Weather Particles -->
+		<div class="weather-particle"><i class="fas fa-snowflake"></i></div>
+		<div class="weather-particle"><i class="fas fa-cloud"></i></div>
+		<div class="weather-particle"><i class="fas fa-bolt"></i></div>
+		<div class="weather-particle"><i class="fas fa-sun"></i></div>
+		
+		<div class="spinner-container">
+			<div class="weather-spinner">
+				<!-- Weather Icons in Circle -->
+				<i class="fas fa-cloud-sun icon-1"></i>
+				<i class="fas fa-cloud-rain icon-2"></i>
+				<i class="fas fa-cloud-snow icon-3"></i>
+				<i class="fas fa-wind icon-4"></i>
+				
+				<!-- Central Sun -->
+				<i class="fas fa-sun sun-center"></i>
+			</div>
+		</div>
+		
+		<div class="loading-text">Gathering Weather Data...</div>
+		<div class="loading-subtext">Fetching the latest weather information and forecasts for your location</div>
+		
+		<div class="progress-container">
+			<div class="progress-bar"></div>
+		</div>
+	</div>
+
 	<!-- Modern Navigation -->
 	<nav class="navbar">
 		<div class="nav-brand">
@@ -499,6 +736,97 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		// Weather Loading Spinner Control
+		document.addEventListener('DOMContentLoaded', function() {
+			const loader = document.getElementById('weatherLoader');
+			const loadingText = document.querySelector('.loading-text');
+			const loadingSubtext = document.querySelector('.loading-subtext');
+			
+			// Array of loading messages
+			const loadingMessages = [
+				{
+					text: "Gathering Weather Data...",
+					subtext: "Fetching the latest weather information and forecasts for your location"
+				},
+				{
+					text: "Analyzing Conditions...",
+					subtext: "Processing current atmospheric data and temperature readings"
+				},
+				{
+					text: "Preparing Forecasts...",
+					subtext: "Calculating upcoming weather patterns and daily predictions"
+				},
+				{
+					text: "Almost Ready...",
+					subtext: "Finalizing your personalized weather experience"
+				}
+			];
+			
+			let messageIndex = 0;
+			
+			// Change loading messages periodically
+			const messageInterval = setInterval(() => {
+				if (messageIndex < loadingMessages.length - 1) {
+					messageIndex++;
+					loadingText.style.opacity = '0';
+					loadingSubtext.style.opacity = '0';
+					
+					setTimeout(() => {
+						loadingText.textContent = loadingMessages[messageIndex].text;
+						loadingSubtext.textContent = loadingMessages[messageIndex].subtext;
+						loadingText.style.opacity = '1';
+						loadingSubtext.style.opacity = '1';
+					}, 300);
+				}
+			}, 1500);
+			
+			// Hide loader when everything is loaded
+			window.addEventListener('load', function() {
+				clearInterval(messageInterval);
+				
+				// Add a minimum loading time for better UX
+				setTimeout(() => {
+					loadingText.textContent = "Weather Ready!";
+					loadingSubtext.textContent = "Welcome to your weather experience";
+					
+					setTimeout(() => {
+						loader.classList.add('hidden');
+						
+						// Remove loader from DOM after transition
+						setTimeout(() => {
+							loader.remove();
+						}, 500);
+					}, 800);
+				}, 1000); // Minimum 1 second loading time
+			});
+			
+			// Fallback: Hide loader after maximum time
+			setTimeout(() => {
+				if (loader && !loader.classList.contains('hidden')) {
+					clearInterval(messageInterval);
+					loader.classList.add('hidden');
+					setTimeout(() => {
+						loader.remove();
+					}, 500);
+				}
+			}, 8000); // Maximum 8 seconds
+		});
+		
+		// Add smooth transitions to loading text
+		document.addEventListener('DOMContentLoaded', function() {
+			const loadingText = document.querySelector('.loading-text');
+			const loadingSubtext = document.querySelector('.loading-subtext');
+			
+			if (loadingText) {
+				loadingText.style.transition = 'opacity 0.3s ease';
+			}
+			if (loadingSubtext) {
+				loadingSubtext.style.transition = 'opacity 0.3s ease';
+			}
+		});
+	</script>
 
 	<script src="{{ url_for('static', filename='scripts/script.js', id=id) }}"></script>
 </body>

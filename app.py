@@ -16,13 +16,35 @@ def homepage():
     """
     id  = uuid4()
     
-    if os.environ.get("load_balancer") == "yes":
-        forwarded_for = request.headers.get("X-Forwarded-For")
+    # Get real user IP address (handles Railway, Heroku, and other cloud platforms)
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    real_ip = request.headers.get("X-Real-IP")
+    cf_connecting_ip = request.headers.get("CF-Connecting-IP")  # Cloudflare
+    
+    if forwarded_for:
+        # X-Forwarded-For can contain multiple IPs, get the first (original client)
         ip_address = forwarded_for.split(',')[0].strip()
+    elif real_ip:
+        # Some proxies use X-Real-IP
+        ip_address = real_ip.strip()
+    elif cf_connecting_ip:
+        # Cloudflare uses CF-Connecting-IP
+        ip_address = cf_connecting_ip.strip()
     else:
+        # Fallback to direct connection IP
         ip_address = request.remote_addr
     
-    print("ip_address", ip_address)
+    # Debug information to help troubleshoot IP detection
+    railway_env = os.environ.get('RAILWAY_ENVIRONMENT')
+    print("=== IP Detection Debug ===")
+    print(f"Railway Environment: {railway_env}")
+    print(f"request.remote_addr: {request.remote_addr}")
+    print(f"X-Forwarded-For: {request.headers.get('X-Forwarded-For')}")
+    print(f"X-Real-IP: {request.headers.get('X-Real-IP')}")
+    print(f"CF-Connecting-IP: {request.headers.get('CF-Connecting-IP')}")
+    print(f"User-Agent: {request.headers.get('User-Agent', 'N/A')[:50]}...")
+    print(f"Final detected IP: {ip_address}")
+    print("===========================")
    
     location = ProcessData.geolocation(ip_address)
     

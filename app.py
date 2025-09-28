@@ -21,6 +21,8 @@ def homepage():
         ip_address = forwarded_for.split(',')[0].strip()
     else:
         ip_address = request.remote_addr
+    
+    print("ip_address", ip_address)
    
     location = ProcessData.geolocation(ip_address)
     
